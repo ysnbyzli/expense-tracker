@@ -1,28 +1,54 @@
-import { Form, Input, Button, Alert } from 'antd';
+import { Form, Input, Button, Alert, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory, useLocation } from 'react-router';
-import api from '../utils/api';
+import { LoginForm } from '../types/user';
+import { useDispatch, useSelector } from 'react-redux';
 import showError from '../utils/showError';
+import { login } from '../store/actions/userActions';
+import { AppState } from '../store';
+import { useEffect } from 'react';
+import showSuccess from '../utils/showSuccess';
+
+
+const validateMessages = {
+    required: "${label} is required!",
+    types: {
+        email: "${label} is not a valid email!",
+        number: "${label} is not a valid number!",
+    },
+    number: {
+        range: "${label} must be between ${min} and ${max}",
+    },
+};
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24, color: "#fff", margin: "0 10px" }} spin />;
 
 const Login = () => {
 
     const history = useHistory();
     const location = useLocation<{ newSignup?: boolean }>();
+    const dispatch = useDispatch();
 
-    const onFinish = async (values: any) => {
-        console.log('Success:', values);
-        try {
-            await api.post("/users/login", values)
-            history.push('/')
-        } catch (error) {
-            console.log({ error })
+    const { data, loading, error } = useSelector((state: AppState) => state.user)
+
+    const onFinish = async (values: LoginForm) => {
+        dispatch(login(values))
+    }
+
+    useEffect(() => {
+        error && showError(error);
+    }, [error])
+
+    useEffect(() => {
+        data.username && showSuccess("You have successfully logged in!")
+    }, [data.username])
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            history.push("/")
         }
-
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', { errorInfo });
-        showError(errorInfo)
-    };
+    }, [history, data])
 
     return (
         <Form
@@ -31,7 +57,7 @@ const Login = () => {
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            validateMessages={validateMessages}
             autoComplete="off"
         >
             <h2 style={{ textAlign: "center", marginBottom: 40 }}>
@@ -43,7 +69,7 @@ const Login = () => {
             <Form.Item
                 label="Username"
                 name="username"
-                rules={[{ required: true, message: 'Please input your username!' }]}
+                rules={[{ required: true }]}
             >
                 <Input />
             </Form.Item>
@@ -51,14 +77,14 @@ const Login = () => {
             <Form.Item
                 label="Password"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={[{ required: true, min: 6 }]}
             >
                 <Input.Password />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                    Submit
+                <Button type="primary" htmlType="submit" disabled={loading}>
+                    {loading ? <Spin indicator={antIcon} /> : "Register"}
                 </Button>
             </Form.Item>
         </Form>
