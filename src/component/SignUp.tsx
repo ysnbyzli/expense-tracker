@@ -1,14 +1,12 @@
 import { useState } from "react";
-import { Form, Input, Button, message, Spin } from "antd";
+import { Form, Input, Button, Spin } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 
 import api from "../utils/api";
+import showError from "../utils/showError";
 
 
-const showError = (errorMessage: string) => {
-    message.error(errorMessage);
-};
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24, color: "#fff", margin: "0 10px" }} spin />;
 
@@ -38,7 +36,7 @@ function SignUp() {
         setLoading(true);
         try {
             await api.post("/users/register", values);
-            history.push("/login");
+            history.push("/login", { newSignup: true });
         } catch (error) {
             console.log({ error });
             showError((error as any).response.data.errorMessage);
