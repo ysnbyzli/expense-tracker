@@ -1,4 +1,3 @@
-import { ThunkDispatch } from "redux-thunk"
 import api from "../../utils/api";
 import { UserDispatch, LoginForm, User } from './../../types/user';
 

@@ -2,6 +2,8 @@ import { Route } from 'react-router-dom';
 import SignUp from './component/SignUp';
 import { Layout, Menu } from 'antd';
 import Login from './component/Login';
+import PrivateRoute from './component/PrivateRoute';
+import Categories from './component/Categories';
 const { Header, Content, Footer } = Layout;
 
 
@@ -20,6 +22,7 @@ function App() {
       <Content className="site-layout" style={{ padding: '50px', marginTop: 64 }}>
         <Route path="/register" component={SignUp} />
         <Route path="/login" component={Login} />
+        <PrivateRoute path="/categories" component={Categories} />
       </Content>
       <Footer style={{ textAlign: 'center' }}>Expense Tracker ©2021</Footer>
     </Layout>

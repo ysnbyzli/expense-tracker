@@ -1,22 +1,23 @@
-import { Redirect, Route, RouteProps } from "react-router"
+import { Redirect, Route, RouteProps } from "react-router-dom";
 
 interface PrivateRouteProps extends RouteProps {
     component: React.FC<any>;
 }
 
-
-const PrivateRoute = ({ component: Component, ...theRest }: PrivateRouteProps) => {
+function PrivateRoute({ component: Component, ...theRest }: PrivateRouteProps) {
     return (
-        <Route {...theRest} render={(props) => {
+        <Route
+            {...theRest}
+            render={(props) => {
+                const token = localStorage.getItem("token");
 
-            const token = localStorage.getItem("token");
-
-            if (token) return <Component {...props} />
-
-            return <Redirect to="/" />
-
-        }} />
-    )
+                if (token) {
+                    return <Component {...props} />;
+                }
+                return <Redirect to="/login" />;
+            }}
+        />
+    );
 }
 
-export default PrivateRoute
+export default PrivateRoute;
