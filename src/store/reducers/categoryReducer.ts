@@ -1,4 +1,4 @@
-import { CategoryState, CategoryAction, AddCategoryAction } from './../../types/category';
+import { CategoryState, CategoryAction, AddCategoryAction, UpdateCategoryAction, DeleteCategoryDispatch, DeleteCategoryAction } from './../../types/category';
 
 const defaultState: CategoryState = {
     data: [],
@@ -6,7 +6,7 @@ const defaultState: CategoryState = {
     error: ""
 }
 
-const categoryReducer = (state: CategoryState = defaultState, action: CategoryAction | AddCategoryAction) => {
+const categoryReducer = (state: CategoryState = defaultState, action: CategoryAction | AddCategoryAction | UpdateCategoryAction | DeleteCategoryAction) => {
     switch (action.type) {
         case "GET_CATEGORIES_START":
             return { ...state, loading: true, error: "" }
@@ -20,6 +20,22 @@ const categoryReducer = (state: CategoryState = defaultState, action: CategoryAc
             return { ...state, loading: false, data: [action.payload, ...state.data] }
         case "ADD_CATEGORY_ERROR":
             return { ...state, loading: false, error: "Error added categories" }
+        case "UPDATE_CATEGORY_START":
+            return { ...state, loading: true, error: "" }
+        case "UPDATE_CATEGORY_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                data: state.data.map(category => category.id === action.payload.id ? action.payload : category)
+            }
+        case "UPDATE_CATEGORY_ERROR":
+            return { ...state, loading: false, error: "Error updating category" }
+        case "DELETE_CATEGORY_START":
+            return { ...state, loading: true, error: "" }
+        case "DELETE_CATEGORY_SUCCESS":
+            return { ...state, loading: false, data: state.data.filter(category => category.id !== action.payload) }
+        case "DELETE_CATEGORY_ERROR":
+            return { ...state, loading: false, error: "Error deleting category" }
         default:
             return state;
     }
