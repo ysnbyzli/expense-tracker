@@ -8,7 +8,7 @@ import { getCategories } from "../store/actions/categoryActions";
 import { Category } from "../types/category";
 import { Mode } from "../types/app";
 import { Record, RecordForm } from "../types/record";
-import { addRecord, getRecord } from "../store/actions/recordAction";
+import { addRecord, deleteRecord, getRecords, updateRecord } from "../store/actions/recordAction";
 
 const emptyForm: RecordForm = {
     title: "",
@@ -17,7 +17,7 @@ const emptyForm: RecordForm = {
 };
 
 function Records() {
-    const { data, loading, error } = useSelector(
+    const { data, loading } = useSelector(
         (state: AppState) => state.records
     );
 
@@ -38,10 +38,10 @@ function Records() {
 
     const handleOk = () => {
         if (mode === "new") dispatch(addRecord(form));
-        // else if (mode === "edit" && typeof updateId === "number")
-        //     dispatch(updateRecord(form, updateId));
-        // else if (mode === "delete" && typeof deleteId === "number")
-        //     dispatch(deleteRecord(deleteId));
+        else if (mode === "edit" && typeof updateId === "number")
+            dispatch(updateRecord(form, updateId));
+        else if (mode === "delete" && typeof deleteId === "number")
+            dispatch(deleteRecord(deleteId));
         setIsModalVisible(false);
         setMode("new");
         setForm(emptyForm);
@@ -135,7 +135,7 @@ function Records() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getRecord());
+        dispatch(getRecords());
         !categories.length && dispatch(getCategories());
     }, []);
 

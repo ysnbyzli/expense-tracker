@@ -22,38 +22,69 @@ export interface RecordState {
     error: string;
 }
 
-interface RECORD_GET_START {
-    type: "RECORD_GET_START"
+interface GET_START {
+    type: "GET_RECORDS_START";
 }
 
-interface RECORD_GET_SUCCESS {
-    type: "RECORD_GET_SUCCESS",
-    payload: Record[]
+interface GET_SUCCESS {
+    type: "GET_RECORDS_SUCCESS";
+    payload: Record[];
 }
 
-interface RECORD_GET_ERROR {
-    type: "RECORD_GET_ERROR",
+interface GET_ERROR {
+    type: "GET_RECORDS_ERROR";
 }
 
-interface RECORD_ADD_START {
-    type: "RECORD_ADD_START"
+interface ADD_START {
+    type: "ADD_RECORD_START";
 }
 
-interface RECORD_ADD_SUCCESS {
-    type: "RECORD_ADD_SUCCESS",
-    payload: Record
+interface ADD_SUCCESS {
+    type: "ADD_RECORD_SUCCESS";
+    payload: Record;
 }
 
-interface RECORD_ADD_ERROR {
-    type: "RECORD_ADD_ERROR",
+interface ADD_ERROR {
+    type: "ADD_RECORD_ERROR";
 }
 
+interface UPDATE_START {
+    type: "UPDATE_RECORD_START";
+}
+
+interface UPDATE_SUCCESS {
+    type: "UPDATE_RECORD_SUCCESS";
+    payload: Record;
+}
+
+interface UPDATE_ERROR {
+    type: "UPDATE_RECORD_ERROR";
+}
+
+interface DELETE_START {
+    type: "DELETE_RECORD_START";
+}
+
+interface DELETE_SUCCESS {
+    type: "DELETE_RECORD_SUCCESS";
+    payload: Record["id"];
+}
+
+interface DELETE_ERROR {
+    type: "DELETE_RECORD_ERROR";
+}
 
 export type RecordAction =
-    RECORD_GET_START |
-    RECORD_GET_SUCCESS |
-    RECORD_GET_ERROR |
-    RECORD_ADD_START |
-    RECORD_ADD_SUCCESS |
-    RECORD_ADD_ERROR
+    | GET_START
+    | GET_SUCCESS
+    | GET_ERROR
+    | ADD_START
+    | ADD_SUCCESS
+    | ADD_ERROR
+    | UPDATE_START
+    | UPDATE_SUCCESS
+    | UPDATE_ERROR
+    | DELETE_START
+    | DELETE_SUCCESS
+    | DELETE_ERROR;
 export type RecordDispatch = ThunkDispatch<RecordState, void, RecordAction>
