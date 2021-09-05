@@ -35,7 +35,7 @@ function SignUp() {
     const onFinish = async (values: any) => {
         setLoading(true);
         try {
-            await api.post("/users/register", values);
+            await api().post("/users/register", values);
             history.push("/login", { newSignup: true });
         } catch (error) {
             console.log({ error });
