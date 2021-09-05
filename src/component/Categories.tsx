@@ -125,7 +125,7 @@ const Categories = () => {
                 </Modal>
             </div>
 
-            <Table columns={columns} dataSource={data} loading={loading} />
+            <Table columns={columns} dataSource={data} loading={loading} rowKey="id" />
         </>
 
 

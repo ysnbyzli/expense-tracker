@@ -54,7 +54,7 @@ const Login = () => {
         <Form
             name="basic"
             labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            wrapperCol={{ span: 10 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             validateMessages={validateMessages}

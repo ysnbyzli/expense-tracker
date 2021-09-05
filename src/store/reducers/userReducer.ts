@@ -9,11 +9,17 @@ const defaultState: UserState = {
 const userReducer = (state: UserState = defaultState, action: UserAction) => {
     switch (action.type) {
         case "LOGIN_START":
+        case "IS_LOGIN_START":
             return { ...state, loading: true, error: "" }
         case "LOGIN_SUCCESS":
+        case "IS_LOGIN_SUCCESS":
             return { ...state, loading: false, data: action.payload }
         case "LOGIN_ERROR":
             return { ...state, loading: false, error: "Login failed." }
+        case "IS_LOGIN_ERROR":
+            return { ...state, loading: false, error: "Token missing or invalid!" }
+        case "LOGOUT":
+            return { ...state, data: {} as User }
         default:
             return state;
     }
