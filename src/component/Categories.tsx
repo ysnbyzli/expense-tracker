@@ -6,8 +6,8 @@ import { addCategory, deleteCategory, getCategories, updateCategory } from '../s
 import { Category, CategoryForm } from '../types/category';
 import { GithubPicker } from 'react-color'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { Mode } from '../types/app'
 
-type Mode = "new" | "edit" | "delete";
 
 
 const emptyForm: CategoryForm = {

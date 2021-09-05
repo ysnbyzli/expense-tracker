@@ -4,6 +4,7 @@ import { Layout, Menu } from 'antd';
 import Login from './component/Login';
 import PrivateRoute from './component/PrivateRoute';
 import Categories from './component/Categories';
+import Records from './component/Records';
 const { Header, Content, Footer } = Layout;
 
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" component={SignUp} />
         <Route path="/login" component={Login} />
         <PrivateRoute path="/categories" component={Categories} />
+        <PrivateRoute path="/records" component={Records} />
       </Content>
       <Footer style={{ textAlign: 'center' }}>Expense Tracker ©2021</Footer>
     </Layout>

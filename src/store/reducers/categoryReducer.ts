@@ -1,4 +1,4 @@
-import { CategoryState, CategoryAction, AddCategoryAction, UpdateCategoryAction, DeleteCategoryDispatch, DeleteCategoryAction } from './../../types/category';
+import { CategoryState, CategoryAction } from './../../types/category';
 
 const defaultState: CategoryState = {
     data: [],
@@ -6,7 +6,7 @@ const defaultState: CategoryState = {
     error: ""
 }
 
-const categoryReducer = (state: CategoryState = defaultState, action: CategoryAction | AddCategoryAction | UpdateCategoryAction | DeleteCategoryAction) => {
+const categoryReducer = (state: CategoryState = defaultState, action: CategoryAction) => {
     switch (action.type) {
         case "GET_CATEGORIES_START":
             return { ...state, loading: true, error: "" }
